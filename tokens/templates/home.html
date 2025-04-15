@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <h1 class="display-5">Welcome to the Mandi Token System</h1>
+    <p class="lead">Save time. Avoid waiting. Get your token before visiting the mandi.</p>
+    <!-- 🖼️ Mandi Image -->
+    <div class="container">
+    <img src="{% static 'images/mandi.jpg' %}"
+     alt="Mandi Image"
+     class="img-fluid rounded mb-4"
+     style="height: 400px; width: 60%; object-fit: cover;">
+    </div>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-4"></div>
+    <a href="{% url 'create_token' %}" class="btn btn-success mt-3">Generate Token</a>
+    <a href="{% url 'view_token' %}" class="btn btn-primary mt-3">Check Token</a>
+    </div>
+</div>
+{% endblock %}
