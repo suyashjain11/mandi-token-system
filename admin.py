@@ -1,8 +1,13 @@
 from django.contrib import admin
-
-# Register your models here.
-
 from .models import Farmer, Token
 
-admin.site.register(Farmer)
-admin.site.register(Token)
+@admin.register(Farmer)
+class FarmerAdmin(admin.ModelAdmin):
+    list_display = ['name', 'village', 'contact_number', 'registration_date']
+    search_fields = ['name', 'village', 'contact_number']
+
+@admin.register(Token)
+class TokenAdmin(admin.ModelAdmin):
+    list_display = ['id', 'farmer', 'crop_type', 'estimated_arrival_time', 'token_status', 'redeemed']
+    list_filter = ['token_status', 'redeemed']
+    search_fields = ['farmer__name', 'crop_type']
