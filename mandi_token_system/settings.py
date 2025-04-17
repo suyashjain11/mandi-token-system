@@ -26,7 +26,12 @@ SECRET_KEY = 'django-insecure-88@&=6d_h$n0c_i!561+b3_ls*ihmoue&gghdinh8!@@(mb_38
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'suyashjain685.pythonanywhere.com']
+
+# settings.py
+
+TIME_ZONE = 'Asia/Kolkata'
+USE_TZ = True  # Keep this True for compatibility with DB and admin
 
 
 # Application definition

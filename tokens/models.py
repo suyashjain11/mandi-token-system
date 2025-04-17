@@ -23,6 +23,8 @@ class Token(models.Model):
     estimated_arrival_time = models.DateTimeField()
     actual_arrival_time = models.DateTimeField(null=True, blank=True)
     token_status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
+    date = models.DateField(auto_now_add=True)
+    redeemed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Token #{self.id} - {self.farmer.name}"
+        return f"Token #{self.id} - {self.farmer.name} - {self.date}"

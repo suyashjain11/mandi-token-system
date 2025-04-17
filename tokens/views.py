@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import FarmerForm
 from .models import Farmer, Token
-from datetime import datetime,timedelta
+from datetime import datetime,timedelta,date
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
 from django.core.mail import send_mail
@@ -17,9 +17,13 @@ def home(request):
 
 @login_required
 def dashboard(request):
-    today = timezone.now().date()
-    tokens_today = Token.objects.filter(estimated_arrival_time__date=today).order_by('estimated_arrival_time')
-    return render(request, 'dashboard.html', {'tokens': tokens_today})
+    today = date.today()
+    todays_tokens = Token.objects.filter(estimated_arrival_time__date=today).order_by('estimated_arrival_time')
+    previous_tokens = Token.objects.exclude(estimated_arrival_time__date=today)
+    return render(request, 'dashboard.html', {
+        'todays_tokens': todays_tokens,
+        'previous_tokens': previous_tokens
+    })
 
 
 def create_token(request):
@@ -97,8 +101,20 @@ def view_token(request):
         'not_found': not_found
     })
 
+def redeem_token(request, token_id):
+    token = get_object_or_404(Token, id=token_id)
+    token.redeemed = True
+    token.save()
+    return redirect('dashboard')
+
 def cancel_token(request, token_id):
     token = get_object_or_404(Token, pk=token_id)
     token.token_status = 'cancelled'
     token.save()
     return HttpResponseRedirect(reverse('view_token'))
+
+def delete_old_tokens(request):
+    if request.method == "POST":
+        today = date.today()
+        Token.objects.exclude(estimated_arrival_time__date=today).delete()
+    return redirect('dashboard')
