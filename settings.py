@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'madi_token_system.urls'
+ROOT_URLCONF = 'mandi_token_system.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'madi_token_system.wsgi.application'
+WSGI_APPLICATION = 'mandi_token_system.wsgi.application'
 
 
 # Database
