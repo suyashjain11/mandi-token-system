@@ -10,6 +10,8 @@
 
 {% block content %}
 <div class="container mt-4">
+<p>Total tokens today: {{ todays_tokens|length }}</p>
+<p>Total previous tokens: {{ previous_tokens|length }}</p>
 
   <h2 class="mb-3">Today's Tokens</h2>
   <table class="table table-bordered table-striped">
@@ -25,7 +27,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for token in today_tokens %}
+      {% for token in todays_tokens %}
       <tr>
         <td>{{ token.id }}</td>
         <td>{{ token.farmer.name }}</td>

@@ -39,10 +39,10 @@ def create_token(request):
             start_time = datetime.now().replace(hour=8, minute=0, second=0, microsecond=0)
 
             # Get the last token issued today
-            today_tokens = Token.objects.filter(estimated_arrival_time__date=datetime.today().date()).order_by('-estimated_arrival_time')
+            todays_tokens = Token.objects.filter(estimated_arrival_time__date=datetime.today().date()).order_by('-estimated_arrival_time')
 
-            if today_tokens.exists():
-                last_slot = today_tokens[0].estimated_arrival_time
+            if todays_tokens.exists():
+                last_slot = todays_tokens[0].estimated_arrival_time
                 next_slot = last_slot + interval
             else:
                 next_slot = start_time
