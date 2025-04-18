@@ -9,7 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.contrib import messages
 from django.utils.timezone import now
-
+from reportlab.pdfgen import canvas
+from io import BytesIO
 
 def home(request):
     return render(request, 'home.html')
@@ -100,6 +101,30 @@ def view_token(request):
         'token': token,
         'not_found': not_found
     })
+
+def download_token_pdf(request, token_id):
+    token = Token.objects.get(id=token_id)
+
+    # Create a file-like buffer to receive PDF data
+    buffer = BytesIO()
+
+    # Create the PDF object, using the buffer as its "file"
+    p = canvas.Canvas(buffer)
+
+    # Draw things on the PDF. Here's where the PDF generation happens
+    p.drawString(100, 800, f"Token ID: {token.id}")
+    p.drawString(100, 780, f"Farmer Name: {token.farmer.name}")
+    p.drawString(100, 760, f"Crop Type: {token.crop_type}")
+    p.drawString(100, 740, f"Estimated Arrival Time: {token.estimated_arrival_time}")
+    p.drawString(100, 720, f"Status: {token.token_status}")
+
+    # Close the PDF object cleanly
+    p.showPage()
+    p.save()
+
+    # File response
+    buffer.seek(0)
+    return HttpResponse(buffer, content_type='application/pdf')
 
 def redeem_token(request, token_id):
     token = get_object_or_404(Token, id=token_id)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Farmer, Token
+from .models import Farmer, Token # type: ignore
 
 @admin.register(Farmer)
 class FarmerAdmin(admin.ModelAdmin):

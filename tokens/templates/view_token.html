@@ -1,31 +1,37 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block title %}View Token{% endblock %}
 
 {% block content %}
-<div class="card shadow p-4 mb-4">
-  <h2>Check Your Token</h2>
-  <form method="post">
-    {% csrf_token %}
-    <label>Enter Contact Number:</label>
-    <input type="text" name="contact_number" class="form-control mb-3" required>
-    <button type="submit" class="btn btn-primary">View Token</button>
-  </form>
+<div class="container mt-5">
+    <h1 class="mb-4">Check Your Token</h1>
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="contact_number" class="form-label">Enter Contact Number:</label>
+            <input type="text" name="contact_number" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">View Token</button>
+    </form>
 
-  {% if token %}
-    <hr>
-    <h5>Token Details:</h5>
-    <ul>
-      <li><strong>Name:</strong> {{ token.farmer.name }}</li>
-      <li><strong>Crop:</strong> {{ token.crop_type }}</li>
-      <li><strong>Arrival:</strong> {{ token.estimated_arrival_time }}</li>
-      <li><strong>Status:</strong> {{ token.token_status }}</li>
-    </ul>
-  {% elif not_found %}
-    <div class="alert alert-warning mt-3">No token found for this contact number.</div>
-  {% endif %}
+    {% if token %}
+        <h3>Token Details:</h3>
+        <ul class="list-group mb-3">
+            <li class="list-group-item"><strong>Name:</strong> {{ token.farmer.name }}</li>
+            <li class="list-group-item"><strong>Crop:</strong> {{ token.crop_type }}</li>
+            <li class="list-group-item"><strong>Arrival Time:</strong> {{ token.estimated_arrival_time }}</li>
+            <li class="list-group-item"><strong>Status:</strong> {{ token.token_status }}</li>
+        </ul>
+    {% elif not_found %}
+        <div class="alert alert-danger">No token found for this contact number.</div>
+    {% endif %}
+
+    {% if token and token.token_status == 'active' %}
+        <form method="post" action="{% url 'cancel_token' token.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Cancel Token</button>
+        </form>
+    {% endif %}
 </div>
-<div class="text-end mb-3">
-    <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>
-  </div>
-  
 {% endblock %}

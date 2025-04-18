@@ -10,7 +10,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('delete-old/', views.delete_old_tokens, name='delete_old'),
     path('redeem/<int:token_id>/', views.redeem_token, name='redeem_token'),
-
+    path('token/<int:token_id>/download/', views.download_token_pdf, name='download_token_pdf'),
 
 
 
