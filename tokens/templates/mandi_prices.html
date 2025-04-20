@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Today’s Mandi Rates{% endblock %}
+{% block content %}
+<h2>📊 Today’s Mandi Rates (Ganj Basoda)</h2>
+
+<table class="table table-bordered table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>Crop</th>
+      <th>Variety</th>
+      <th>Min Price (₹)</th>
+      <th>Max Price (₹)</th>
+      <th>Average Price (₹)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for rate in prices %}
+    <tr>
+      <td>{{ rate.crop_name }}</td>
+      <td>{{ rate.variety }}</td>
+      <td>{{ rate.min_price }}</td>
+      <td>{{ rate.max_price }}</td>
+      <td>{{ rate.avg_price }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">No rates available today.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

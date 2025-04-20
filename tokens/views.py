@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import FarmerForm
-from .models import Farmer, Token
+from .models import Farmer, Token, MandiPrice
 from datetime import datetime,timedelta,date
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
@@ -143,3 +143,8 @@ def delete_old_tokens(request):
         today = date.today()
         Token.objects.exclude(estimated_arrival_time__date=today).delete()
     return redirect('dashboard')
+
+
+def mandi_prices_view(request):
+    today_prices = MandiPrice.objects.filter(date=date.today()).order_by('crop_name')
+    return render(request, 'mandi_prices.html', {'prices': today_prices})

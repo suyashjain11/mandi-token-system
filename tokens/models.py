@@ -27,3 +27,18 @@ class Token(models.Model):
 
     def __str__(self):
         return f"Token #{self.id} - {self.farmer.name} - {self.estimated_arrival_time}"
+    
+    # tokens/models.py
+
+class MandiPrice(models.Model):
+    crop_name = models.CharField(max_length=100)
+    variety = models.CharField(max_length=100)
+    min_price = models.IntegerField()
+    max_price = models.IntegerField()
+    avg_price = models.IntegerField()
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.crop_name} - {self.date}"
+
+    
