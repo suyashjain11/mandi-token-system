@@ -39,6 +39,6 @@ class MandiPrice(models.Model):
     date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.crop_name} - {self.date}"
+        return f"{self.crop_name} - {self.variety} on {self.date}"
 
     
