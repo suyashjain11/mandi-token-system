@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}मंडी की छुट्टियाँ{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">📅 मंडी की छुट्टियाँ - {{ today.year }}</h2>
+
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>तारीख</th>
+                <th>कारण</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for date, reason in holidays %}
+            <tr>
+                <td>{{ date|date:"d F Y" }}</td>
+                <td>{{ reason }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">कोई छुट्टी नहीं मिली।</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="text-end">
+        <a href="{% url 'home' %}" class="btn btn-primary mt-3">🏠 होमपेज पर वापस जाएं</a>
+    </div>
+</div>
+{% endblock %}

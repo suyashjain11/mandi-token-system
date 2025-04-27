@@ -4,50 +4,49 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="mb-4">🎟 Generate Token</h2>
-    <form method="POST">
-        {% csrf_token %}
+    <h1 class="mb-4">टोकन बनाएं</h1>
 
-        <!-- Farmer Details -->
-        <div class="mb-3">
-            <label for="name" class="form-label">Farmer Name</label>
-            {{ farmer_form.name }}
-        </div>
-        <div class="mb-3">
-            <label for="village" class="form-label">Village</label>
-            {{ farmer_form.village }}
-        </div>
-        <div class="mb-3">
-            <label for="contact_number" class="form-label">Contact Number</label>
-            {{ farmer_form.contact_number }}
-        </div>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="name" class="form-label">किसान का नाम:</label>
+        {{ farmer_form.name }}
+    </div>
 
-        <!-- Crop Type -->
-        <div class="mb-3">
-            <label for="crop_type" class="form-label">Crop Type</label>
-            <input type="text" name="crop_type" class="form-control" required>
-        </div>
+    <div class="mb-3">
+        <label for="contact_number" class="form-label">संपर्क नंबर:</label>
+        {{ farmer_form.contact_number }}
+    </div>
 
-        <!-- Date Selection -->
-        <div class="mb-3">
-            <label for="token_date" class="form-label">Generate Token For:</label>
-            <select class="form-control" id="token_date" name="token_date" required>
-                <option value="">-- Select --</option>
-                <option value="today">Today</option>
-                <option value="tomorrow">Tomorrow</option>
-            </select>
+    <div class="mb-3">
+        <label for="village" class="form-label">पता:</label>
+        {{ farmer_form.village }}
+    </div>
 
-        </div>
+    <div class="mb-3">
+        <label for="crop_type" class="form-label">फसल का प्रकार:</label>
+        <select name="crop_type" class="form-select" required>
+            <option value="">फसल चुनें</option>
+            <option value="गेहूं">गेहूं</option>
+            <option value="चना">चना</option>
+            <option value="सोयाबीन">सोयाबीन</option>
+            <option value="मसूर">मसूर</option>
+            <option value="धान">धान</option>
+            <option value="तिवड़ा">तिवड़ा</option>
+            <option value="सरसों">सरसों</option>
+            <option value="मक्का">मक्का</option>
+            <!-- और फसलें जोड़ सकते हैं -->
+        </select>
+    </div>
 
-        {% if messages %}
-        {% for message in messages %}
-         <div class="alert alert-warning">{{ message }}</div>
-        {% endfor %}
-        {% endif %}
+    <div class="mb-3">
+        <label class="form-label">कब का टोकन चाहिए?</label><br>
+        <input type="radio" name="token_date" value="today" checked> आज
+        <input type="radio" name="token_date" value="tomorrow" class="ms-3"> कल
+    </div>
 
+    <button type="submit" class="btn btn-primary">टोकन जनरेट करें</button>
+</form>
 
-        <!-- Submit -->
-        <button type="submit" class="btn btn-success">Generate Token</button>
-    </form>
 </div>
 {% endblock %}

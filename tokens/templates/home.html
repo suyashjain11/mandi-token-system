@@ -5,8 +5,8 @@
 
 {% block content %}
 <div class="text-center mt-5">
-    <h1 class="display-5">Welcome to the Mandi Token System</h1>
-    <p class="lead">Save time. Avoid waiting. Get your token before visiting the mandi.</p>
+    <h1 class="display-5">मंडी टोकन ऐप में आपका स्वागत है</h1>
+    <p class="lead">समय बचाएँ। इंतज़ार से बचें। मंडी जाने से पहले अपना टोकन अवश्य लें.</p>
     <!-- 🖼️ Mandi Image -->
     <div class="container">
     <img src="{% static 'images/mandighibli.png' %}"
@@ -15,8 +15,8 @@
      style="height: 400px; width: 60%; object-fit: cover;">
     </div>
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-4"></div>
-    <a href="{% url 'create_token' %}" class="btn btn-success mt-3">Generate Token</a>
-    <a href="{% url 'view_token' %}" class="btn btn-primary mt-3">Check Token</a>
+    <a href="{% url 'create_token' %}" class="btn btn-success mt-3">टोकन बनाएं</a>
+    <a href="{% url 'view_token' %}" class="btn btn-primary mt-3">अपना टोकन देखें</a>
     </div>
 </div>
 {% endblock %}

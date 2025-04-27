@@ -1,38 +1,47 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load tz %}
 
-{% block title %}View Token{% endblock %}
+{% block title %}टोकन देखें{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="mb-4">Check Your Token</h1>
-    <form method="post" class="mb-4">
+<div class="container mt-4">
+
+  <h2 class="mb-4">🔍 अपना टोकन देखें</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="contact_number" class="form-label">अपना संपर्क नंबर दर्ज करें:</label>
+      <input type="text" name="contact_number" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-success">🔍 टोकन खोजें</button>
+  </form>
+
+  {% if token %}
+    <div class="mt-4 card p-3">
+      <h4>🎟️ टोकन विवरण</h4>
+      <p><strong>नाम:</strong> {{ token.farmer.name }}</p>
+      <p><strong>फसल का प्रकार:</strong> {{ token.crop_type }}</p>
+      <p><strong>आगमन समय:</strong> {{ token.estimated_arrival_time|date:"d F Y - g:i a" }}</p>
+      <p><strong>स्थिति:</strong> {{ token.token_status }}</p>
+
+      {% if token.token_status == 'active' %}
+      <form method="post" action="{% url 'cancel_token' token.id %}">
         {% csrf_token %}
-        <div class="mb-3">
-            <label for="contact_number" class="form-label">Enter Contact Number:</label>
-            <input type="text" name="contact_number" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary">View Token</button>
-    </form>
+        <button type="submit" class="btn btn-danger mt-2">🚫 टोकन रद्द करें</button>
+      </form>
+      {% endif %}
+    </div>
 
-    {% if token %}
-        <h3>Token Details:</h3>
-        <ul class="list-group mb-3">
-            <li class="list-group-item"><strong>Name:</strong> {{ token.farmer.name }}</li>
-            <li class="list-group-item"><strong>Crop:</strong> {{ token.crop_type }}</li>
-            <li class="list-group-item"><strong>Arrival Time:</strong> {{ token.estimated_arrival_time|localtime|date:"F j, Y, g:i a" }}</li>
-            <li class="list-group-item"><strong>Status:</strong> {{ token.token_status }}</li>
-        </ul>
-    {% elif not_found %}
-        <div class="alert alert-danger">No token found for this contact number.</div>
-    {% endif %}
+  {% elif not_found %}
+    <div class="alert alert-warning mt-3">
+      ❗ इस नंबर के लिए कोई टोकन नहीं मिला।
+    </div>
+  {% endif %}
 
-    {% if token and token.token_status == 'active' %}
-        <form method="post" action="{% url 'cancel_token' token.id %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Cancel Token</button>
-        </form>
-    {% endif %}
+  <div class="text-end mt-3">
+    <a href="{% url 'home' %}" class="btn btn-primary">🏠 होम पर लौटें</a>
+  </div>
+
 </div>
 {% endblock %}

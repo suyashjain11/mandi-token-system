@@ -24,14 +24,57 @@ from django.utils.timezone import localtime
 def dashboard(request):
     today = date.today()
     todays_tokens = Token.objects.filter(estimated_arrival_time__date=today).order_by('estimated_arrival_time')
-    future_tokens = Token.objects.filter(estimated_arrival_time__date__gt=today).order_by('estimated_arrival_time')
-    previous_tokens = Token.objects.filter(estimated_arrival_time__date__lt=today).order_by('-estimated_arrival_time')
+    previous_tokens = Token.objects.filter(estimated_arrival_time__date__lt=today)
+    future_tokens = Token.objects.filter(estimated_arrival_time__date__gt=today)
 
     return render(request, 'dashboard.html', {
         'todays_tokens': todays_tokens,
+        'previous_tokens': previous_tokens,
         'future_tokens': future_tokens,
-        'previous_tokens': previous_tokens
     })
+
+
+def mandi_holidays(request):
+    today = date.today()
+    year = today.year
+
+    mp_holidays = holidays.India(state='MP', years=[year])
+
+    holiday_list = []
+
+    # Add Sundays
+    for month in range(1, 13):
+        for day in range(1, 32):
+            try:
+                d = date(year, month, day)
+                if d.weekday() == 6 and d >= today:  # Sunday
+                    holiday_list.append((d, "रविवार (Sunday)"))
+            except:
+                continue
+
+    # Add 2nd and 4th Saturdays
+    for month in range(1, 13):
+        saturday_count = 0
+        for day in range(1, 32):
+            try:
+                d = date(year, month, day)
+                if d.weekday() == 5:  # Saturday
+                    saturday_count += 1
+                    if saturday_count in [2, 4] and d >= today:
+                        holiday_list.append((d, "दूसरा/चौथा शनिवार (2nd/4th Saturday)"))
+            except:
+                continue
+
+    # Add Government Holidays
+    for d, name in mp_holidays.items():
+        if d >= today:
+            holiday_list.append((d, name))
+
+    # Sort holidays by date
+    holiday_list.sort()
+
+    return render(request, 'holidays.html', {'holidays': holiday_list})
+
 
 def create_token(request):
     if request.method == 'POST':
@@ -57,7 +100,7 @@ def create_token(request):
                 )
 
             if is_holiday(target_date):
-                messages.error(request, "Mandi is closed on holidays.")
+                messages.error(request, "मंडी अवकाश पर बंद है। कृपया सही दिन चुनें।")
                 return render(request, 'create_token.html', {'farmer_form': farmer_form})
 
             # ⏱️ Delay logic with 15-minute rounding

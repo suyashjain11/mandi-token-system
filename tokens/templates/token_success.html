@@ -2,18 +2,31 @@
 {% load static %}
 {% load tz %}
 
-{% block title %}Token Created{% endblock %}
+{% block title %}टोकन सफलतापूर्वक जनरेट हुआ{% endblock %}
 
 {% block content %}
-<div class="card shadow p-4 mb-4">
-    <h1>Your Token is Generated!</h1>
-    <p><strong>Token ID:</strong> {{ token.id }}</p>
-    <p><strong>Arrival Time:</strong> {{ token.estimated_arrival_time|localtime|date:"F j, Y, g:i a" }}</p>
-    <p><strong>Status:</strong> {{ token.token_status }}</p>
-    <div class="text-end mb-3">
-        <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>
-    </div>
-    <a href="{% url 'download_token_pdf' token.id %}" class="btn btn-primary">Download Token as PDF</a>
+<div class="container mt-5 text-center">
+    <h1 class="mb-4">✅ आपका टोकन सफलतापूर्वक जनरेट हुआ!</h1>
 
+    <div class="card shadow-lg p-4">
+        <h4><strong>🔖 टोकन आईडी:</strong> {{ token.id }}</h4>
+        <h4><strong>👨‍🌾 कृषक का नाम:</strong> {{ token.farmer.name }}</h4>
+        <h4><strong>🌾 फसल का प्रकार:</strong> {{ token.crop_type }}</h4>
+        <h4><strong>🕒 आगमन समय:</strong> {{ token.estimated_arrival_time|date:"d F Y - g:i a" }}</h4>
+        <h4><strong>📋 स्थिति:</strong> 
+            {% if token.token_status == 'active' %}
+                सक्रिय
+            {% elif token.token_status == 'completed' %}
+                पूर्ण
+            {% else %}
+                रद्द किया गया
+            {% endif %}
+        </h4>
+
+        <div class="mt-4">
+            <a href="{% url 'home' %}" class="btn btn-primary">🏠 होम पर लौटें</a>
+            <a href="{% url 'download_token_pdf' token.id %}" class="btn btn-success">⬇️ पीडीएफ डाउनलोड करें</a>
+        </div>
+    </div>
 </div>
 {% endblock %}
