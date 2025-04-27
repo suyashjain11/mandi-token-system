@@ -1,22 +1,53 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Create Token{% endblock %}
 
 {% block content %}
-<div class="card shadow p-4 mb-4">
-  <h2>Generate Mandi Token</h2>
-  <form method="post">
-    {% csrf_token %}
-    <h5>Farmer Info</h5>
-    {{ farmer_form.as_p }}
-    <div class="mb-3">
-      <label>Crop Type</label>
-      <input type="text" name="crop_type" class="form-control" required>
-    </div>
-    <button type="submit" class="btn btn-success">Generate</button>
-  </form>
+<div class="container mt-4">
+    <h2 class="mb-4">🎟 Generate Token</h2>
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Farmer Details -->
+        <div class="mb-3">
+            <label for="name" class="form-label">Farmer Name</label>
+            {{ farmer_form.name }}
+        </div>
+        <div class="mb-3">
+            <label for="village" class="form-label">Village</label>
+            {{ farmer_form.village }}
+        </div>
+        <div class="mb-3">
+            <label for="contact_number" class="form-label">Contact Number</label>
+            {{ farmer_form.contact_number }}
+        </div>
+
+        <!-- Crop Type -->
+        <div class="mb-3">
+            <label for="crop_type" class="form-label">Crop Type</label>
+            <input type="text" name="crop_type" class="form-control" required>
+        </div>
+
+        <!-- Date Selection -->
+        <div class="mb-3">
+            <label for="token_date" class="form-label">Generate Token For:</label>
+            <select class="form-control" id="token_date" name="token_date" required>
+                <option value="">-- Select --</option>
+                <option value="today">Today</option>
+                <option value="tomorrow">Tomorrow</option>
+            </select>
+
+        </div>
+
+        {% if messages %}
+        {% for message in messages %}
+         <div class="alert alert-warning">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-success">Generate Token</button>
+    </form>
 </div>
-<div class="text-end mb-3">
-    <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>
-  </div>
-  
 {% endblock %}

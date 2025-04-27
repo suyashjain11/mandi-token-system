@@ -5,12 +5,13 @@ from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 import time
 from tokens.models import MandiPrice
-from datetime import date
+from datetime import date,datetime
 
 class Command(BaseCommand):
     help = 'Fetches grain mandi rates from Napanta'
 
     def handle(self, *args, **kwargs):
+        MandiPrice.objects.filter(date=date.today()).delete()
         url = "https://www.napanta.com/market-price/madhya-pradesh/vidisha/ganjbasoda"
 
         # Chrome Options
@@ -32,6 +33,9 @@ class Command(BaseCommand):
 
         rows = soup.select("table tbody tr")
 
+        date_str = cells[6].strip()  # Example: '20 Apr 2025'
+        parsed_date = datetime.strptime(date_str, "%d %b %Y").date()
+
         count = 0
         for row in rows:
             cells = [c.get_text(strip=True) for c in row.find_all("td")]
@@ -39,19 +43,19 @@ class Command(BaseCommand):
                 continue
 
             try:
-                crop = cells[0]
+                crop_name = cells[0]
                 variety = cells[2]
                 max_price = int(cells[3].replace("₹", "").replace(",", "").strip())
                 avg_price = int(cells[4].replace("₹", "").replace(",", "").strip())
                 min_price = int(cells[5].replace("₹", "").replace(",", "").strip())
 
                 MandiPrice.objects.create(
-                    crop_name=crop,
+                    crop_name=crop_name,
                     variety=variety,
                     max_price=max_price,
                     avg_price=avg_price,
                     min_price=min_price,
-                    date=date.today()
+                    date=parsed_date
                 )
                 count += 1
 

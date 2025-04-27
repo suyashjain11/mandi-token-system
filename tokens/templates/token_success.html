@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load tz %}
 
 {% block title %}Token Created{% endblock %}
 
@@ -7,7 +8,7 @@
 <div class="card shadow p-4 mb-4">
     <h1>Your Token is Generated!</h1>
     <p><strong>Token ID:</strong> {{ token.id }}</p>
-    <p><strong>Arrival Time:</strong> {{ token.estimated_arrival_time }}</p>
+    <p><strong>Arrival Time:</strong> {{ token.estimated_arrival_time|localtime|date:"F j, Y, g:i a" }}</p>
     <p><strong>Status:</strong> {{ token.token_status }}</p>
     <div class="text-end mb-3">
         <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>

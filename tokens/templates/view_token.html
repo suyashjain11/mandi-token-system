@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load tz %}
 
 {% block title %}View Token{% endblock %}
 
@@ -20,7 +21,7 @@
         <ul class="list-group mb-3">
             <li class="list-group-item"><strong>Name:</strong> {{ token.farmer.name }}</li>
             <li class="list-group-item"><strong>Crop:</strong> {{ token.crop_type }}</li>
-            <li class="list-group-item"><strong>Arrival Time:</strong> {{ token.estimated_arrival_time }}</li>
+            <li class="list-group-item"><strong>Arrival Time:</strong> {{ token.estimated_arrival_time|localtime|date:"F j, Y, g:i a" }}</li>
             <li class="list-group-item"><strong>Status:</strong> {{ token.token_status }}</li>
         </ul>
     {% elif not_found %}

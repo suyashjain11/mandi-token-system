@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Today’s Mandi Rates{% endblock %}
 {% block content %}
-<h2>📊 Today’s Mandi Rates (Ganj Basoda)</h2>
+<h2 class="mb-4">📊 Mandi Rates for <span class="text-primary">{{ today_date|date:"F d, Y" }}</span></h2>
 
 <table class="table table-bordered table-striped">
   <thead class="table-dark">

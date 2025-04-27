@@ -52,7 +52,43 @@
         </tbody>
     </table>
 
-    <h2 class="mt-5 mb-3">Previous Tokens</h2>
+    <!-- Future Tokens -->
+    <h2 class="mt-5 mb-3">Future Tokens</h2>
+    <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+        <th>ID</th>
+        <th>Farmer</th>
+        <th>Crop Type</th>
+        <th>Arrival Time</th>
+        <th>Status</th>
+        <th>Redeemed</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for token in future_tokens %}
+        <tr>
+        <td>{{ token.id }}</td>
+        <td>{{ token.farmer.name }}</td>
+        <td>{{ token.crop_type }}</td>
+        <td>{{ token.estimated_arrival_time }}</td>
+        <td>{{ token.token_status }}</td>
+        <td>
+            {% if token.redeemed %}
+            ✅ Redeemed
+            {% else %}
+            ❌ Not Redeemed
+            {% endif %}
+        </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">No future tokens found.</td></tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+
+    <h2 class="mt-5 mb-3">Previous Tokens (Before Today)</h2>
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
         <tr>
@@ -85,6 +121,7 @@
         {% endfor %}
         </tbody>
     </table>
+
 
     <form action="{% url 'delete_old' %}" method="post">
         {% csrf_token %}
