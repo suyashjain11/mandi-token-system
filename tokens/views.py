@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import FarmerForm
 from .models import Farmer, Token, MandiPrice
 from datetime import datetime, timedelta, date, time
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -166,3 +166,7 @@ def mandi_prices_view(request):
     today = date.today()
     today_prices = MandiPrice.objects.filter(date=today).order_by('crop_name')
     return render(request, 'mandi_prices.html', {'prices': today_prices, 'today_date': today})
+
+def csrf_failure(request, reason=""):
+    return render(request, "csrf_failure.html", status=403)
+

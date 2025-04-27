@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'suyashjain685.pythonanywhere.com']
 TIME_ZONE = 'Asia/Kolkata'
 USE_TZ = True  # Keep this True for compatibility with DB and admin
 
+CSRF_FAILURE_VIEW = 'tokens.views.csrf_failure'
 
 # Application definition
 
