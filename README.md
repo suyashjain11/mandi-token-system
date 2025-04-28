@@ -1,45 +1,51 @@
-# 🌾 Mandi Token System - Django Web App
+# 🌾 मंडी टोकन प्रबंधन प्रणाली | Mandi Token System (Django Web App)
 
-A smart and simple token management system built for farmers to save time at the mandi (market). Farmers can pre-book their arrival using a token, reducing unnecessary waiting and crowding.
+Smart and farmer-friendly web app for pre-booking tokens at the mandi (market yard).  
+Save time, reduce waiting, and get real-time updates — now in Hindi 🇮🇳!
 
 ![Made with Django](https://img.shields.io/badge/Built%20with-Django-blue?logo=django)
-![Bootstrap](https://img.shields.io/badge/Styled%20with-Bootstrap-purple?logo=bootstrap)
-![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
+![Styled with Bootstrap](https://img.shields.io/badge/Styled%20with-Bootstrap-purple?logo=bootstrap)
+![Python](https://img.shields.io/badge/Python-3.13+-blue?logo=python)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
 ## 🚀 Live Demo
 
-👉 [Click here to try it out](https://suyashjain685.pythonanywhere.com/)  
-*(Replace with your actual deployed link when ready)*
+👉 [Click here to try the app](https://suyashjain685.pythonanywhere.com/)  
+*(Replace with correct link if different)*
 
 ---
 
-## 📸 Demo Preview
+## 📸 Screenshots
 
-![Homepage Screenshot](screenshots/homepage.png)
+*(Upload and insert screenshots later here if needed)*
 
 ---
 
 ## 💡 Features
 
-- 👨‍🌾 Farmers can generate tokens from home
-- 🕒 Estimated arrival times are auto-scheduled
-- 👀 View and cancel tokens by contact number
-- 🔐 Admin login to see full token dashboard
-- 📱 Responsive design with Bootstrap
-- 📩 Email alerts (and SMS ready!)
-- 🚀 Deployable on PythonAnywhere or Render
+- 👨‍🌾 Farmers can easily generate arrival tokens from home
+- 🕒 Smart token time assignment (after 30 minutes, in 15-min slots)
+- 📅 "Today" and "Tomorrow" booking options
+- 🚫 Auto-blocks holidays (Sundays, 2nd/4th Saturdays, Govt Holidays)
+- 🛡️ Farmer can **view**, **download PDF**, **cancel** token anytime
+- 📈 Mandi Rates page with daily crop prices
+- 🗓️ Holiday Calendar showing upcoming mandi holidays
+- 📋 Admin Dashboard with Today, Previous, Future tokens
+- 📱 Mobile responsive and Hindi-supported design
 
 ---
 
 ## 🧱 Tech Stack
 
-- **Backend**: Python, Django
-- **Frontend**: HTML, Bootstrap 5
-- **Database**: SQLite3 (can be upgraded to PostgreSQL)
-- **Deployment**: PythonAnywhere
-- **Version Control**: Git & GitHub
+| Layer       | Tech                 |
+| ----------- | -------------------- |
+| Backend     | Python, Django        |
+| Frontend    | HTML5, Bootstrap 5    |
+| Database    | SQLite3 (easily upgradeable) |
+| Deployment  | PythonAnywhere        |
+| Other Tools | Selenium, ReportLab, Holidays |
 
 ---
 
@@ -49,7 +55,12 @@ A smart and simple token management system built for farmers to save time at the
 git clone https://github.com/yourusername/mandi-token-system.git
 cd mandi-token-system
 python -m venv venv
-venv\\Scripts\\activate    # or source venv/bin/activate on Mac/Linux
+venv\Scripts\activate      # (Windows)
+# OR
+source venv/bin/activate    # (Mac/Linux)
+
 pip install -r requirements.txt
+python manage.py makemigrations
 python manage.py migrate
+python manage.py createsuperuser   # (Optional for Admin login)
 python manage.py runserver
