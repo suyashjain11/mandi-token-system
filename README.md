@@ -19,9 +19,10 @@ Save time, reduce waiting, and get real-time updates — now in Hindi 🇮🇳!
 
 ## 📸 Screenshots
 
-*(Upload and insert screenshots later here if needed)*
+---![Screenshot 2025-04-28 102056](https://github.com/user-attachments/assets/e1d47a11-ed13-4d92-ad0c-13f711577cf1)
+![Screenshot 2025-04-28 102218](https://github.com/user-attachments/assets/5eba5ac4-69d2-412b-9a8b-73eaccc8636a)
+![Screenshot 2025-04-28 120324](https://github.com/user-attachments/assets/2aa80c21-e5b6-47fd-859a-bea3c93af017)
 
----
 
 ## 💡 Features
 
